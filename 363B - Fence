@@ -1,0 +1,30 @@
+http://codeforces.com/contest/363/problem/B
+   brute force      dp
+   
+   HINT :Another easy problem. We need to calculate the sum of every consequtive segment of k planks. One way to do this is to calculate partial prefix sums: . Then the sum of heights of the planks i, i + 1, ..., i + k - 1 is si + k - 1 - si - 1. 
+   
+#include<iostream>
+#include<algorithm>
+#include<cstdio>
+using namespace std;
+int main()
+{
+  int n,k;
+  cin>>n>>k;
+  int a[n+1],i,beg,sum[n+1];
+  for(i=1;i<=n;i++)
+  cin>>a[i];
+  int min=1e9;
+  sum[0]=0;
+  for(i=1;i<=n;i++)
+  {
+    sum[i]=sum[i-1]+a[i];
+    if(i>=k && sum[i]-sum[i-k]<min)
+    {
+      min=sum[i]-sum[i-k];
+      beg=i-k+1;
+    }
+  }
+  cout<<beg<<endl;
+  return 0;
+}
