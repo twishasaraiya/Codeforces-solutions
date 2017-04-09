@@ -1,0 +1,50 @@
+PROBLEM:http://codeforces.com/contest/777/problem/A
+
+HINT:Fix the initial numeration of shells. Consider function p(i, j) to be the index of the shell located at position j after i moves.
+
+p(0) = {0, 1, 2}
+p(1) = {1, 0, 2}
+p(2) = {1, 2, 0}
+p(3) = {2, 1, 0}
+p(4) = {2, 0, 1}
+p(5) = {0, 2, 1}
+p(6) = {0, 1, 2}
+Thus, after 6 movements all shells will get back to initial positions. To solve the problem we need to take n modulo 6 and simulate that number of moves.
+
+SOLUTION:
+#include<iostream>
+#include<algorithm>
+#include<string>
+#include<cstdio>
+#include<set>
+#include<map>
+#include<stack>
+using namespace std;
+
+int main()
+{
+  long long ops;
+  int x;
+  cin>>ops>>x;
+  int a[3];
+  a[0]=0;a[1]=1;a[2]=2;
+  int n=ops%6;
+  for(int i=1;i<=n;i++)
+  {
+    int temp;
+    if(i%2==0)
+    {
+      temp=a[1];
+      a[1]=a[2];
+      a[2]=temp;
+    }
+    else
+    {
+      temp=a[0];
+      a[0]=a[1];
+      a[1]=temp;
+    }
+  }
+  cout<<a[x]<<endl;
+  return 0;
+}
