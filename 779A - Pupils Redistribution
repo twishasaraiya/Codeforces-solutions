@@ -1,0 +1,47 @@
+PROBLEM:http://codeforces.com/contest/779/problem/A
+
+HINT:To solve this problem let's use array cnt[]. We need to iterate through first array with academic performances and for current performance x let's increase cnt[x] on one. In the same way we need to iterate through the second array and decrease cnt[x] on one.
+If after that at least one element of array cnt[] is odd the answer is  - 1 (it means that there are odd number of student with such performance and it is impossible to divide them in two. If all elements are even the answer is the sum of absolute values of array cnt divided by 2. In the end we need to divide the answer on 2 because each change will be counted twice with this way of finding the answer.
+
+SOLUTION:
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+#include<cstdio>
+#include<set>
+#include<map>
+#include<stack>
+#include<stdio.h>
+using namespace std;
+
+int main()
+{
+  int n,a[101],b[101],i;
+  cin>>n;
+  for(i=0;i<n;i++)
+  cin>>a[i];
+  for(i=0;i<n;i++)
+  cin>>b[i];
+  int cnt[6]={0};
+  for(i=0;i<n;i++)
+  {
+    cnt[a[i]]++;
+  }
+  for(i=0;i<n;i++)
+  cnt[b[i]]--;
+  int s=0;
+  for(i=0;i<6;i++)
+  {
+    if(cnt[i]%2!=0)
+    {
+      cout<<"-1"<<endl;
+      return 0;
+    }
+    else{
+      s+=abs(cnt[i])/2;
+    }
+  }
+  s=s/2;
+  cout<<s<<endl;
+  return 0;
+}
