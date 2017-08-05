@@ -1,0 +1,36 @@
+PROBLEM-LINK:http://codeforces.com/problemset/problem/535/B
+
+TAGS:bitmasks      brute force      implementation
+
+SOLUTION:
+#include<iostream>
+#include<string>
+#include<bits/stdc++.h>
+#include<algorithm>
+#include<math.h>
+#include<vector>
+#define ll long long
+using namespace std;
+//const ll mod=1000000007;
+ll lucky[2048];
+int main(){
+    int n;
+    cin>>n;
+    lucky[0]=4;
+    lucky[1]=7;
+    int i=0;
+    int pos=2;
+    ll x,y;
+    while(x<1000000000){
+        x=lucky[i]*10+4;
+        y=lucky[i]*10+7;
+        lucky[pos++]=x;
+        lucky[pos++]=y;
+        i++;
+    }
+    for(i=0;i<pos;i++){
+        if(n==lucky[i])
+            cout<<i+1<<endl;
+    }
+    return 0;
+}
