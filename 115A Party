@@ -1,0 +1,34 @@
+PROBLEM LINK:http://codeforces.com/contest/115/problem/A
+
+TAGS:   dfs and similar      graphs      trees
+
+
+SOLUTION:
+#include<iostream>
+#include<string>
+#include<bits/stdc++.h>
+#include<algorithm>
+#include<math.h>
+#include<vector>
+#define ll long long
+using namespace std;
+//const ll mod=1000000007;
+
+int main(){
+    int n;
+    cin>>n;
+    int p[n],i;
+    for(i=1;i<=n;i++)
+        cin>>p[i];
+    int ans=0;
+    for(i=1;i<=n;i++){
+        int maxdepth=0;
+        for(int j=i;j<=n && j!=-1;j=p[j])
+        {
+            maxdepth++;
+        }
+        ans=max(ans,maxdepth);
+    }
+    cout<<ans<<endl;
+    return 0;
+}
