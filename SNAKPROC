@@ -1,0 +1,48 @@
+CODECHEF SNACKDOWN QUALIFIER:https://www.codechef.com/SNCKQL17/problems/SNAKPROC
+
+QUESTION:Snake Procession
+
+SOLUTION:
+#include<iostream>
+#include<string>
+#include<bits/stdc++.h>
+#include<algorithm>
+#include<math.h>
+#include<vector>
+#include<queue>
+#define ll long long
+using namespace std;
+//const ll mod=1000000007;
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n,i;
+        cin>>n;
+        char s[n];
+        cin>>s;
+        char cur='H';
+        bool flag=true;
+        int f=1,cnt=0;
+        for(i=0;i<n;i++){
+            cur=(flag)?'H':'T';
+            if(s[i]=='.')
+                continue;
+            else if(s[i]!=cur)
+            {
+                f=0;
+                break;
+            }
+            else{
+                flag=(flag)?false:true;
+                cnt++;
+            }
+        }
+        //printf("cnt=%d\n",cnt);
+        if(f && cnt%2==0)
+            printf("Valid\n");
+        else
+            printf("Invalid\n");
+    }
+    return 0;
+}
