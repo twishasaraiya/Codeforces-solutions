@@ -1,0 +1,74 @@
+The following is a description of the instance of this famous puzzle involving n=2 eggs and a building with k=36 floors.
+
+Suppose that we wish to know which stories in a 36-story building are safe to drop eggs from, and which will cause the eggs to break on landing. We make a few assumptions:
+
+…..An egg that survives a fall can be used again.
+…..A broken egg must be discarded.
+…..The effect of a fall is the same for all eggs.
+…..If an egg breaks when dropped, then it would break if dropped from a higher floor.
+…..If an egg survives a fall then it would survive a shorter fall.
+…..It is not ruled out that the first-floor windows break eggs, nor is it ruled out that the 36th-floor do not cause an egg to break.
+In this problem you have to find minimum trials to solve for n eggs and k floors.
+For more description on this problem see wiki page
+
+Input:
+The first line contains an integer T, depicting total number of test cases. 
+Then following T lines contains 2 integers n and k.
+
+
+Output:
+Print the minimum trials required to solve the problem.
+ 
+
+Constraints:
+1<=T<=30
+1<=n<=10
+1<=k<=50
+
+
+Example:
+Input:
+1
+2 10
+
+Output:
+4
+
+SOLUTION
+
+#include <iostream>
+#include<algorithm>
+#include<limits.h>
+using namespace std;
+
+int main() {
+    int t;
+    cin>>t;
+    while(t--){
+        int n,k,val;
+        cin>>n>>k;
+        int dp[n+1][k+1];
+        for(int i=0;i<=n;i++){
+            dp[i][0]=0;
+            dp[i][1]=1;
+        }
+        for(int j=0;j<=k;j++){
+            dp[1][j]=j;
+        }
+        
+        for(int i=2;i<=n;i++)
+        {
+            for(int j=2;j<=k;j++){
+                dp[i][j]=INT_MAX;
+                for(int x=1;x<=j;x++)
+                {
+                    val=1+max(dp[i-1][x-1],dp[i][j-x]);
+                    if(val<dp[i][j])
+                        dp[i][j]=val;
+                }
+            }
+        }
+        cout<<dp[n][k]<<endl;
+    }
+	return 0;
+}
