@@ -1,0 +1,48 @@
+PROBLEM LINK:https://www.hackerearth.com/problem/algorithm/pablo-the-dea/
+
+TAGS: BINARY-SEARCH
+
+LOGIC:sumofdigit(k+1)
+is not greater than sumofdigit(k) + 1
+finally we can say that if a number k satisfies the difference condition then (k + 1) will also satisfy same equation so our job is to find the smallest number which satisfies the difference condition then all numbers greater than this and up to N will satisfy the condition so our answer will be N – smallest number we found.
+
+SOLUTION:
+#include<iostream>
+#include<string>
+#include<bits/stdc++.h>
+#include<algorithm>
+#include<math.h>
+#include<vector>
+#include<queue>
+#define ll unsigned long long
+using namespace std;
+const int maxn=100001;
+const ll mod=1000000007;
+ 
+ll sumOfDigit(ll x){
+    ll sod=0;
+    while(x){
+        sod+=x%10;
+        x/=10;
+    }
+    return sod;
+}
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--){
+        ll n,m;
+        cin>>n>>m;
+        ll low=1,high=n;
+        while(low<=high){
+           ll mid=(low+high)/2;
+           if(mid-sumOfDigit(mid)<m)
+                low=mid+1;
+            else 
+                high=mid-1;
+        }
+        cout<<n-high<<endl;
+    }
+    return 0;
+}
