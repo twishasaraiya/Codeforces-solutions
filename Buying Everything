@@ -1,0 +1,47 @@
+PROBLEM LINK:https://www.hackerrank.com/contests/codeagon/challenges/buying-everything/problem
+
+SOLUTION:
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#define ll long long
+#define pb push_back
+using namespace std;
+
+
+int main() {
+    ll n,m,k;
+    cin>>n>>m>>k;
+    ll x,i;
+    vector<ll> v;
+    for(i=0;i<n;i++){
+        cin>>x;
+        if(x==1){
+            v.pb(i);
+        }
+    }
+    if(m>v.size()){
+        printf("-1\n");
+        return 0;
+    }
+    ll ans=0;
+    for(i=0;i<m;i++){
+         if(i==0)
+             ans=v[i];
+         else
+           ans+=(v[i]-v[i-1])*i*k;
+        }
+    ll final_ans=ans;
+    for(i=m;i<v.size();i++){
+        ll left,right,decr;
+        left=v[i-m+1]-v[i-m];
+        right=(v[i]-v[i-1])*(m-1)*k;
+        decr=(v[i-1]-v[i-m])*k;
+        ans=ans-decr+left+right;
+        final_ans=min(ans,final_ans);
+    }
+    cout<<final_ans<<endl;
+    return 0;
+}
