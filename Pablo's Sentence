@@ -1,0 +1,38 @@
+PROBLEM LINK:https://www.hackerearth.com/challenge/college/narcodes/algorithm/pablos-prison/
+
+TAGS: STRING ,EASY
+
+COMPETITION: NARCODES BY NIT RAIPUR
+SOLUTON:
+#include<iostream>
+#include<string>
+#include<bits/stdc++.h>
+#include<algorithm>
+#include<math.h>
+#include<vector>
+#include<queue>
+#define ll unsigned long long
+using namespace std;
+const int maxn=100001;
+const ll mod=1000000007;
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--){
+        string s;
+        cin>>s;
+        ll cnt=0,v=0,c=0;
+        for(int i=0;i<s.size();i++){
+            if(s[i]=='a'||s[i]=='e'||s[i]=='i'||s[i]=='o'||s[i]=='u')   v++;
+            else cnt+=v;
+        }
+        for(int i=0;i<s.size();i++){
+            if(s[i]=='a'||s[i]=='e'||s[i]=='i'||s[i]=='o'||s[i]=='u')   cnt+=c;
+            else    c++;
+        }
+        cout<<cnt<<endl;
+    }
+    return 0;
+}
