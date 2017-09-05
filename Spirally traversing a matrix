@@ -1,0 +1,53 @@
+PROBLEM LINK: http://practice.geeksforgeeks.org/problems/spirally-traversing-a-matrix/0
+
+TAGS: ARRAY ,MATRIX
+
+SOLUTION:
+#include <iostream>
+using namespace std;
+
+int main() {
+	int t;
+	cin>>t;
+	while(t--){
+	    int a[4][4],i,j;
+	    for(i=0;i<4;i++){
+	        for(j=0;j<4;j++){
+	            cin>>a[i][j];
+	        }
+	    }
+	   int currRow=0,endRow=4,currCol=0,endCol=4;
+	   while(currRow<endRow && currCol<endCol){
+	       
+	       //traversing first row
+	       for(i=currCol;i<endCol;i++){
+	        cout<<a[currRow][i]<<" ";
+	       }
+	       currRow++;
+	        
+	        //traversing last column
+	        for(i=currRow;i<endRow;i++){
+	            cout<<a[i][endCol-1]<<" ";
+	        }
+	        endCol--;
+	        
+	        //traversing last row
+	        if(currCol<endCol){
+    	        for(i=endCol-1;i>=currCol;i--){
+    	            cout<<a[endRow-1][i]<<" ";
+    	        }
+    	        endRow--;
+	        }
+	        
+	        //traversing first column
+	        if(currRow<endRow){
+    	        for(i=endRow-1;i>=currRow;i--){
+    	            cout<<a[i][currCol]<<" ";
+    	        }
+    	        currCol++;
+	        }
+	   }
+	   cout<<endl;
+	}
+	return 0;
+}
