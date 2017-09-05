@@ -1,0 +1,49 @@
+PROBLEM LINK:http://practice.geeksforgeeks.org/problems/number-of-coins/0
+
+TAGS : DYNAMMIC PROGRAMMING
+
+SOLUTION:
+#include<iostream>
+#include<string>
+#include<bits/stdc++.h>
+#include<algorithm>
+#include<math.h>
+#include<vector>
+#include<queue>
+#define ll unsigned long long
+using namespace std;
+const int maxn=100001;
+const ll mod=1000000007;
+
+int main() {
+	int t;
+	cin>>t;
+	while(t--){
+	    int v,n;
+	    cin>>v>>n;
+	    int a[n],i;
+	    for(i=0;i<n;i++)
+	        cin>>a[i];
+	    sort(a,a+n,greater<int>());
+	    int dp[v+1];//it will store the minimum number of coins requires for i value
+	    for(i=1;i<=v;i++){
+	        dp[i]=INT_MAX;
+	    }
+	    dp[0]=0;
+	    //compute min coins for each change from 1 to v
+	    for(i=1;i<=v;i++){
+	        for(int j=0;j<n;j++){
+	            if(a[j]<=i){
+	                int sub_result=dp[i-a[j]];
+	                if(sub_result!=INT_MAX && sub_result+1<dp[i])
+	                    dp[i]=sub_result+1;
+	            }
+	        }
+	    }
+	    if(dp[v]!=INT_MAX)
+	    cout<<dp[v]<<endl;
+	    else
+	    cout<<"-1"<<endl;
+	}
+	return 0;
+}
