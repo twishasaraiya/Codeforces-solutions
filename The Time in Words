@@ -1,0 +1,69 @@
+PROBLEM LINK:https://www.hackerrank.com/challenges/the-time-in-words/problem
+
+TAGS: MEDIUM, STL MAP
+
+SOLUTION
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include<map>
+using namespace std;
+
+
+int main() {
+    int h,m;
+    cin>>h>>m;
+    map<int,string> mp;
+    mp[1]="one";
+     mp[2]="two";
+     mp[3]="three";
+     mp[4]="four";
+     mp[5]="five";
+     mp[6]="six";
+     mp[7]="seven";
+     mp[8]="eight";
+     mp[9]="nine";
+     mp[10]="ten";
+     mp[11]="eleven";
+     mp[12]="twelve";
+     mp[13]="thirteen";
+     mp[14]="fourteen"; 
+    mp[15]="quarter";
+     mp[16]="sixteen";
+     mp[17]="seventeen";
+     mp[18]="eighteen";
+     mp[19]="nineteen";
+     mp[20]="twenty";
+    mp[21]=mp[20]+" "+mp[1];
+    mp[22]=mp[20]+" "+mp[2];
+    mp[23]=mp[20]+" "+mp[3];
+    mp[24]=mp[20]+" "+mp[4];
+    mp[25]=mp[20]+" "+mp[5];
+    mp[26]=mp[20]+" "+mp[6];
+    mp[27]=mp[20]+" "+mp[7];
+    mp[28]=mp[20]+" "+mp[8];
+    mp[29]=mp[20]+" "+mp[9];
+    mp[30]="half";
+    
+    string ans;
+    if(m==0){
+        ans=mp[h]+" o' clock";
+    }
+    else if(m<=30){
+        ans=mp[m];
+        ans+=(m==15 || m==30)?"":" minute";
+        ans+=(m>1 && m!=15 && m!=30)?"s":"";
+        ans+=" past "+mp[h];
+    }
+    else{
+        m=60-m;
+        ans+=mp[m];
+        ans+=(m==15 || m==30)?"":" minute";
+        ans+=(m>1 && m!=15 && m!=30)?"s":"";
+        ans+=" to "+mp[h+1];
+    }
+    cout<<ans<<endl;
+    return 0;
+}
