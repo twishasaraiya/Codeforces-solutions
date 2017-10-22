@@ -1,0 +1,132 @@
+PROBLEM LINK: https://www.codechef.com/OCT17/problems/CHEFGP
+
+CONTEST: OCTOBER CHALLENGE 2017, CODECHEF
+
+SOLUTION
+#include<iostream>
+#include<string>
+#include<bits/stdc++.h>
+#include<algorithm>
+#include<math.h>
+#include<vector>
+#include<stdio.h>
+#include<queue>
+#include<map>
+#include<iterator>
+#include<climits>
+#define ll long long
+#define ull unsigned long long
+using namespace std;
+const int maxn=100001;
+//const ll mod=1000000007;
+//const ll INF=1000000005;
+string s,ans;
+int x,y,a,b,minGroupA,minGroupB;
+char ch[2];
+//case 1 :both groups have different partitions
+void getAns(int x,int y,int a,int b,int minGroupA,int f){
+    int xt=b%(minGroupA-1);
+    int tempLimB=b/(minGroupA-1);
+    for(int i=0;i<minGroupA-1;i++){
+        for(int j=0;j<x;j++){
+            ans+=ch[f];
+        }
+        for(int j=0;j<tempLimB;j++){
+            ans+=ch[f^1];
+        }
+        if(xt>0){
+            xt--;
+            ans+=ch[f^1];
+        }
+    }
+    xt=a%x;
+    if(xt==0)
+        xt=x;
+    for(int i=0;i<xt;i++){
+        ans+=ch[f];
+    }
+}
+//case 2: when we need to give some kiwis
+void getAns2(int x,int y,int a,int b,int f){
+    while(a>0 && b>0){
+        for(int i=0;i<x;i++){
+            ans+=ch[f];
+        }
+        ans+=ch[f^1];
+        a-=x;
+        b--;
+    }
+    for(int i=0;i<x;i++){
+        ans+=ch[f];
+    }
+    a-=x;
+    while(a>0){
+        ans+='*';
+        //cout<<ans<<endl;
+        int xt=min(x,a);
+        while(xt--){
+            ans+=ch[f];
+        }
+        a-=x;
+    }
+}
+//case 3: when both A and B have equal partitions
+void getAns3(){
+    int xa=a%x,xb=b%y;
+    for(int i=0;i<minGroupA-1;i++){
+        for(int j=0;j<x;j++){
+            ans+='a';
+        }
+        for(int j=0;j<y;j++){
+            ans+='b';
+        }
+    }
+    if(xa==0)xa=x;
+    if(xb==0)xb=y;
+
+    for(int j=0;j<xa;j++){
+        ans+='a';
+    }
+    for(int j=0;j<xb;j++){
+        ans+='b';
+    }
+}
+int main()
+{
+    int t;
+    cin>>t;
+    ch[0]='a';
+    ch[1]='b';
+    while(t--){
+        cin>>s;
+        cin>>x>>y;
+        a=0,b=0;
+        for(char c: s){
+            if(c=='a')a++;
+            else b++;
+        }
+        minGroupA=ceil((double)a/(double)x);
+        minGroupB=ceil((double)b/(double)y);
+
+        if(a>=(minGroupB-1) && b>=(minGroupA-1)){
+            ans="";
+            if(minGroupA==minGroupB){
+                getAns3();
+            }else if(minGroupA>minGroupB){
+                getAns(x,y,a,b,minGroupA,0);
+            }else{
+                getAns(y,x,b,a,minGroupB,1);
+            }
+        }
+        else{
+            ans="";
+            if(a>b){
+                getAns2(x,y,a,b,0);
+            }else{
+                getAns2(y,x,b,a,1);
+            }
+        }
+        cout<<ans<<endl;
+    }
+    return 0;
+}
