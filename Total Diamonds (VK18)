@@ -1,0 +1,58 @@
+PROBLEM LINK: https://www.codechef.com/problems/VK18
+
+CONTEST: CODECHEF DECEMBER LONG CHALLENGE
+
+EXPLANATION: Given a value of N the maximum value that can appear in the NxN matrix is 2*N i.e. (N+N). So we only need an array of size 2*N. Then we calculate the number of diamonds for each possible number in the matrix by running a loop from 1 to 2*N and using diamonds().For example if N=3 then instead of calculating everytime we already know the number of diamonds for N=2,so we can use it directly.Now we need to add the sum of row and column except the number at intersection of row and col.Since both of these values are going to be same we multiply it by 2. Then we just add the number at intersction point just once. 
+
+SOLUTION:
+#include<iostream>
+#include<string>
+#include<bits/stdc++.h>
+#include<algorithm>
+#include<math.h>
+#include<vector>
+#include<stdio.h>
+#include<queue>
+#include<map>
+#include<iterator>
+#include<climits>
+#define ll long long
+#define ull unsigned long long
+using namespace std;
+const int maxn=100001;
+//const ll mod=1000000007;
+//const ll INF=1000000005;
+const ll N=1000001;
+ll ans[2*N],arr[2000005],sum[2000005];
+ll diamonds(ll n){
+    ll se=0,so=0;
+    while(n>0){
+        int d=n%10;
+        if(d%2) so+=d;
+        else se+=d;
+        n=n/10;
+    }
+    return abs(se-so);
+}
+void init(){
+    for(ll i=1;i<2000005;i++)
+        arr[i]=diamonds(i);
+    for(ll i=1;i<2000005;i++)
+        sum[i]=sum[i-1]+arr[i];
+    ans[1]=2;
+    for(ll i=2;i<2000005;i++){
+        ans[i]=ans[i-1]+2*(sum[2*i-1]-sum[i])+arr[2*i];
+    }
+}
+int main()
+{
+    init();
+    ll t;
+    cin>>t;
+    while(t--){
+        ll n;
+        cin>>n;
+        cout<<ans[n]<<endl;
+    }
+    return 0;
+}
