@@ -1,0 +1,89 @@
+PROBLEM
+Given a collection of Intervals,merge all the overlapping Intervals.
+For example:
+
+Given [1,3], [2,6], [8,10], [15,18],
+
+return [1,6], [8,10], [15,18].
+
+Make sure the returned intervals are sorted.
+
+ 
+
+Input:
+
+The first line contains an integer T, depicting total number of test cases. 
+Then following T lines contains an integer N depicting the number of Intervals and next line followed by the intervals starting and ending positions 'x' and 'y' respectively.
+
+
+Output:
+
+Print the intervals after overlapping in sorted manner.  There should be a newline at the end of output of every test case.
+
+Constraints:
+
+1 ≤ T ≤ 50
+1 ≤ N ≤ 100
+0 ≤ x ≤ y ≤ 100
+
+
+Example:
+
+Input
+2
+4
+1 3 2 4 6 8 9 10
+4
+6 8 1 9 2 4 4 7
+
+Output
+1 4 6 8 9 10
+1 9
+
+SOLUTION
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t;
+	cin>>t;
+	while(t--){
+	    int n,x,y;
+	    cin>>n;
+	    vector<pair<int,int>> v;
+	    for(int i=0;i<n;i++){
+	        cin>>x>>y;
+	        v.push_back(make_pair(x,y));
+	    }
+	    sort(v.begin(),v.end());
+	    stack<pair<int,int>> stk;
+	    stk.push(v[0]);
+	    pair<int,int> tmp;
+	    for(int i=1;i<n;i++){
+	        tmp=stk.top();
+	        if(tmp.second < v[i].first)
+	            stk.push(v[i]);
+	        else if(tmp.second < v[i].second){
+	            tmp.second=v[i].second;
+	            stk.pop();
+	            stk.push(tmp);
+	        }
+	    }
+	    //cout<<"Merged intervals are:"<<endl;
+	    stack<pair<int,int>> stk1;
+	    while(!stk.empty()){
+	        stk1.push(stk.top());
+	        stk.pop();
+	        //cout<<tmp.first<<" "<<tmp.second<<" ";
+	    }
+	    while(!stk1.empty()){
+	        tmp=stk1.top();
+	        stk1.pop();
+	        cout<<tmp.first<<" "<<tmp.second<<" ";
+	    }
+	   cout<<endl;
+	}
+	return 0;
+}
