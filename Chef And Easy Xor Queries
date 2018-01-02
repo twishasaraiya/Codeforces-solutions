@@ -1,0 +1,85 @@
+Problem Code: CHEFEXQ
+
+Problem Link:https://www.codechef.com/problems/CHEFEXQ
+
+Tags: Square Root Decomposition
+
+Solution
+#include<iostream>
+#include<string>
+#include<bits/stdc++.h>
+#include<algorithm>
+#include<math.h>
+#include<vector>
+#include<stdio.h>
+#include<queue>
+#include<map>
+#include<iterator>
+#include<climits>
+#define ll long long
+#define ull unsigned long long
+using namespace std;
+const ll maxn=100001;
+//const ll mod=1000000007;
+//const ll INF=1000000005;
+int blockSize=500;
+vector<ll> block[1000];
+ll blockXorValue[1000];
+
+void update(int index,int a[],int n){
+  int startIndex=index*blockSize;
+  int endIndex=(index+1)*blockSize;
+  endIndex--;
+  endIndex=min(endIndex,n);
+  block[index].clear();
+  int prefXor=0;
+  for(int i=startIndex;i<=endIndex;i++){
+    prefXor^=a[i];
+    block[index].push_back(prefXor);
+  }
+  blockXorValue[index]=prefXor;
+  sort(block[index].begin(),block[index].end());
+}
+
+int query(int index,int val,int a[]){
+  int ans=0;
+  int curXor=0;
+  int startBlock=0;
+  int endBlock=index/blockSize;
+  while(startBlock<endBlock){
+    int neededVal=curXor^val;
+    int tempAns=upper_bound(block[startBlock].begin(),block[startBlock].end(),neededVal)-lower_bound(block[startBlock].begin(),block[startBlock].end(),neededVal);
+    ans+=tempAns;
+    curXor^=blockXorValue[startBlock];
+    startBlock++;
+  }
+  for(int i=startBlock*blockSize;i<=index;i++){
+    curXor^=a[i];
+    if(curXor==val) ans++;
+  }
+  return ans;
+}
+int main()
+{
+    int n,q;
+    cin>>n>>q;
+    int a[n];
+    for(int i=0;i<n;i++) cin>>a[i];
+    int numOfBlocks=n/blockSize;
+    for(int i=0;i<=numOfBlocks;i++){
+      update(i,a,n-1);
+    }
+    while(q--){
+      int typ,idx,val;
+      cin>>typ>>idx>>val;
+      idx--;
+      if(typ==1){
+        a[idx]=val;
+        update(idx/blockSize,a,n-1);
+      }else{
+          int ans=query(idx,val,a);
+          cout<<ans<<endl;
+      }
+    }
+    return 0;
+}
