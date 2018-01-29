@@ -1,0 +1,51 @@
+PROBLEM LINK:https://www.hackerrank.com/contests/hackerrank-hiring-contest/challenges/winning-lottery-ticket/problem
+
+CONCEPTS LEARNED: BITMASK
+
+SOLUTION
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long int
+#define pb push_back
+#define gc getchar_unlocked
+#define fi first
+#define se second
+#define pii pair<int,int>
+#define pll pair<ll,ll>
+
+#define mp make_pair
+#define vi vector<int>
+#define vll vector<ll>
+const int mod = (int)1e9+7;
+const int mx = (1<<10)-1;
+int main(int argc, char const *argv[])
+{
+	ll n;
+    cin>>n;
+    string x;
+    ll cnt[mx+5]={0};
+    for(ll i=0;i<n;i++){
+        cin>>x;
+        int bitmask=0;
+        for(ll j=0;j<x.size();j++)
+            bitmask|=(1<<(x[j]-'0'));
+        cnt[bitmask]++;
+    }
+    ll ans=0;
+    for(int i=0;i<=mx;i++){
+        for(int j=0;j<=mx;j++){
+            if((i|j)==mx){
+                //printf("%d|%d=%d\n",i,j,mx);
+                if(i==j)
+                    ans+=cnt[i]*(cnt[j]-1);
+                else
+                    ans+=cnt[i]*cnt[j];
+            }
+        }
+    }
+    cout<<ans/2<<endl;
+	return 0;
+}  
