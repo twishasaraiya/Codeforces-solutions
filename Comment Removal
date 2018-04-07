@@ -1,0 +1,60 @@
+Remove comments from a given C/C++ program
+
+#include<iostream>
+#include<string>
+#include<bits/stdc++.h>
+#include<algorithm>
+#include<math.h>
+#include<vector>
+#include<stdio.h>
+#include<queue>
+#include<map>
+#include<iterator>
+#include<climits>
+
+#define ll long long
+#define ull unsigned long long
+#define pb push_back
+#define mp make_pair
+
+using namespace std;
+const ll maxn=100001;
+//const ll mod=1000000007;
+//const ll INF=1000000005;
+
+bool cmp(const pair<int,int> &a,const pair<int,int> &b){
+  return (a.second<b.second);
+}
+int main()
+{
+    string str,ip;
+    getline(cin,str);
+    //cout<<str<<endl;
+    while(str.length()!=0){
+      getline(cin,ip);
+      if(ip.length()==0)
+          break;
+       str+= "\n"+ip;
+    }
+    //cout<<str<<endl;
+
+    bool single = false;
+    bool multi =false;
+
+    for(int i=0;i<str.length();i++){
+      if(single == true && str[i]=='\n')
+          single=false;
+      else if(multi == true && str[i]=='*' && str[i+1]=='/')
+          multi=false,i++;
+      else if(single || multi)
+        continue;
+      else if(str[i]=='/' && str[i+1]=='*'){
+        multi=true,i++;
+      }
+      else if(str[i]=='/' && str[i+1]=='/'){
+        single= true,i++;
+      }
+
+      else  cout<<str[i];
+    }
+}
